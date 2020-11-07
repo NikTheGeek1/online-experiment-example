@@ -95,8 +95,7 @@ $ python run.py shell
 (This approach is designed to make all requests point to the same page, so a user cannot skip straight to the 'complete' page simply by knowing the URL.)
 
 - `main.templates` contains the Flask templates for each page. These are returned by the task functions (via the render_template function)
-- `main.utils` contains the utils for registering tasks, and some tricksy code for randomising order of tasks (ask RH about this if you need
-to add more than one task and/or randomise the order). In general, don't worry about this folder.
+- `main.utils` contains the utils for registering tasks, and some tricksy code for randomising order of tasks. In general, don't worry about this folder.
 - `main.static` contains CSS and JS for the applications. In order to add a static file, use the Flask template syntax:
 
 ```jinja2
