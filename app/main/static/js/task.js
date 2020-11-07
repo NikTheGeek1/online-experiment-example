@@ -14,7 +14,7 @@ var end_time;
 //Load stimuli json data
 /////////////////////////
 // fetch("/experiments/flaskdemo/static/json/stim.json")
-fetch(root_string + "static/json/stim.json")
+fetch(root_string + "/static/json/stim.json")
 .then(function(response) {
     return response.json();
   })
