@@ -56,7 +56,7 @@ THIS LINE SHOULD BE REMOVED IN PRODUCTION.
 '''
 
 # if DEBUG:
-root_string = '/example' # <--- URL of your experiment
+root_string = 'example' # <--- URL of your experiment
 # else if PRODUCTION:
 # root_string = 'flaskdemo'
 # print(root_string)
