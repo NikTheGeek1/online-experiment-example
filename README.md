@@ -18,19 +18,9 @@ flask_session
 
 ### Running (development):
 
-Create a virtual environment.  I use Anaconda so in my case I do
+Create a virtual environment (using windows/mac CLI)
 
-
-```bash
-$ conda create -n py37flask python=3.7
-```
-then
-```bash
-$ conda activate py37flask
-```
-
-Or without Anaconda (i.e. on the server) you can:
-
+Mac
 ```bash
 $ python3 -m venv venv
 ```
@@ -38,7 +28,6 @@ and
 ```bash
 $ source venv/bin/activate
 ```
-
 
 
 Install dependencies
@@ -54,6 +43,27 @@ $ python run.py runserver
 ```
 
 
+Windows
+```bash
+python3 -m venv venv
+```
+and
+```bash
+venv/bin/activate
+```
+
+
+Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+Run development server
+
+```bash
+python run.py runserver
+```
 ## Description of project
 
 
@@ -115,19 +125,19 @@ In general, it should be sufficient to modify the HTML/CSS/JS in `app.templates`
 
 ### 1. Prepare a task folder for production
 
-- In the `main/view.py` file, around line 60, set `root_string` to be a unique name of your experiment (e.g. `myexp` for `bramleylab.ppls.ed.ac.uk/experiments/myexp`.
+- In the `main/view.py` file, around line 60, set `root_string` to be a unique name of your experiment (e.g. `myexp` for `hdm.ppls.ed.ac.uk/experiments/myexp`.
 
-- In the `main/models.py` file, edit the table names for the `Participant` class and `Task` class. (e.g. set ` _table_ = 'nb_flaskdemo_participant'` within the Participant class and `_table_ = 'nb_flaskdemo_task'` around line 58 within the Task class, in `main/models.py` around line 88).
+- In the `main/models.py` file, edit the table NAME 48.
 
 - To help us differentiate tables, it's recommended to prefix these tables with your initials and experiment name. These table names need to be unique too.
 
-- Upload it to the home directory of the lab server (see handbook). It's suggested to clear system files, auto-created pycaches, flask_session, local dbs, .git folders etc. before the upload. Consider running `git clean -xd -n` and `git clean -xd -f` to remove those files.
+- Upload it to the home directory of the lab server (I use cyberduck to upload stuff in the directory). It's suggested to clear system files, auto-created pycaches, flask_session, local dbs, .git folders etc. before the upload. Consider running `git clean -xd -n` and `git clean -xd -f` to remove those files.
 
 ### 2. Create a production Python App
 
-- Log into cPanel (see handbook), use the "Setup Python App" app to create a new python >3.4  environment. (Neil and Bonan found 3.7.3 worked for them, Philipp found he had to use 3.6.8 to include some of his libraries.)
+- Log into cPanel, use the "Setup Python App" app to create a new python >3.4  environment. (I usually go with Python 3.7 which is also the recommended)
 
-- For the "Application root" field, put the name of the task folder you uploaded. (Neil used `flask` for the demo, so the app is housed in `bramleylab.ppls.ed.ac.uk/flask`).
+- For the "Application root" field, put the name of the task folder you uploaded. (I used `example` for the current example, so the app is housed in `hdm.ppls.ed.ac.uk/example`).
 
 - For the "Application URL" field, put `experiments/[ROOT_STRING]`, where root_string is the one you set in the `main/view.py` file in your task folder (around line 60).
 
@@ -141,15 +151,11 @@ In general, it should be sufficient to modify the HTML/CSS/JS in `app.templates`
 
 Once you have created the python app, it automatically shows you the commands you need to run next.
 
-- Open your terminal, secure shell terminal access to server:
-  ```bash
-  ssh wwwbramleylabppl@chost4.is.ed.ac.uk
-  ```
-- And input the SSH password (Ask Neil)
+- Open your terminal from inside cPanel.
 
 - Then activate the python you just created (you can copy paste from the "Setup Python App" page - in the yellow box on the top of the page after the app is created)
   ```bash
-  source /home/wwwbramleylabppl/virtualenv/[yourpythonappname]/[yourpythonversion]/bin/activate
+  source /home/hdm/virtualenv/[yourpythonappname]/[yourpythonversion]/bin/activate
   ```
 - `cd` to the location of your task folder, and manullly install the dependencies from `requirements.txt` there
    ```bash
@@ -161,8 +167,6 @@ Once you have created the python app, it automatically shows you the commands yo
   ```
   application = create_app(os.getenv('FLASK_ENV') or 'config.ProductionConfig')
   ```
-  Note: Bonan found `application = create_app('config.ProductionConfig')` works for her. But Philipp suggests to use the one above.
-
 
 ### 4. Check if the task is alive
 
@@ -186,6 +190,6 @@ For tables, go to "PhpPgAdmin" on cPanel to check if your tables have appeared i
 
 - For actually running a study make sure to comment out `session.clear()` around line 143 so that participants cannot repeat the task.  (When in development the final refresh allows one to restart the task.)
 
-- When distributing the experiment URL, do not add `/`. In other words, always use `bramleylab.ppls.ed.ac.uk/experiments/myexp`, *not* `bramleylab.ppls.ed.ac.uk/experiments/myexp/`, because the slash in the end will cause routing problem.
+- When distributing the experiment URL, do not add `/`. In other words, always use `hdm.ppls.ed.ac.uk/experiments/example`, *not* `hdm.ppls.ed.ac.uk/experiments/example/`, because the slash in the end will cause routing problem.
 
 - `read_in_from_server.R` can be adapted to locally to pull the data and read it into R dataframes and save it as `.rData`
