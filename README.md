@@ -20,7 +20,7 @@ flask_session
 
 Create a virtual environment (using windows/mac CLI)
 
-Mac
+## Mac
 ```bash
 $ python3 -m venv venv
 ```
@@ -43,7 +43,7 @@ $ python run.py runserver
 ```
 
 
-Windows
+## Windows
 ```bash
 python3 -m venv venv
 ```
